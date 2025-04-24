@@ -43,6 +43,7 @@ Route getOneWayList(void)
     for (const auto& edge : edges)
 	{
         route.addOneWay(edge.first.first, edge.first.second, edge.second);
+        route.addOneWay(edge.first.second, edge.first.first, edge.second);
 	}
 	return route;
 }

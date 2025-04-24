@@ -1,36 +1,48 @@
 #include "longtrip.h"
 
-static void deepFirstSearch(const Route& route, int id, vector<bool>& visited, Path& current, Path& best)
+static void deepFirstSearch(const Route& route, int startId, Path& best)
 {
-    visited[id] = true;
-    current.path.push_back(id);
-    if (current.distance > best.distance)
+    stack<pair<int, Path>> s;
+    vector<bool> visited(route.list.size(), false);
+
+    Path initialPath;
+    s.push({startId, initialPath});
+    while (!s.empty())
 	{
-        best.distance = current.distance;
-        best.path = current.path;
-    }
-    for (const auto& edge : route.list[id])
-	{
-        if (!visited[edge.id])
+        auto [id, current] = s.top();
+        s.pop();
+        if (visited[id])
 		{
-			current.distance += edge.distance;
-            deepFirstSearch(route, edge.id, visited, current, best);
-			current.distance -= edge.distance;
-		}
+            continue;
+        }
+        visited[id] = true;
+        current.path.push_back(id);
+        if (current.distance > best.distance)
+		{
+            best.distance = current.distance;
+            best.path = current.path;
+        }
+        for (const auto& edge : route.list[id])
+		{
+            if (!visited[edge.id])
+			{
+                Path newPath = current;
+                newPath.distance += edge.distance;
+                s.push({edge.id, newPath});
+            }
+        }
+        current.path.pop_back();
     }
-    visited[id] = false;
-    current.path.pop_back();
 }
 
 void findBestPath(Route& route)
 {
-	Path current;
 	Path best;
     vector<bool> visited(route.numOfWay, false);
 
     for (int i = 0; i < route.numOfWay; i++)
 	{
-        deepFirstSearch(route, i, visited, current, best);
+        deepFirstSearch(route, i, best);
 	}
     for (const auto& station : best.path)
 	{
