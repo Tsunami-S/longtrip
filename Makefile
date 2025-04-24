@@ -6,20 +6,23 @@ SRCDIR = sources
 OBJDIR = objects
 
 # sources
-SRCS = main.c 
+SRCS = main.cpp \
+	   get_oneway_list.cpp \
+	   find_best_route.cpp
 
 # objects
-OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
+OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
 
 # flags
-WFLAG = -Wall -Wextra -Werror
-IFLAG = -I$(INCDIR)
+BASIC_FLAG = -std=c++17 -O2
+WARNING_FLAG = -Wall -Wextra -Werror
+INCLUDE_FLAG = -I$(INCDIR)
 
 # rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(WFALG) $(OBJS) $(IFLAG) -o $(NAME)
+	g++ $(BASIC_FALG) $(WARNING_FALG) $(OBJS) $(INCLUDE_FLAG) -o $(NAME)
 
 clean:
 	$(RM) -r $(OBJDIR)
@@ -29,8 +32,9 @@ fclean: clean
 
 re: fclean all
 
-$(OBJDIR)/%.o:$(SRCDIR)/%.c
+$(OBJDIR)/%.o:$(SRCDIR)/%.cpp
 	@mkdir -p $(@D)
-	$(CC) $(WFLAG) $(IFLAG) -c $< -o $@
+	g++ $(BASIC_FLAG) $(WARNING_FLAG) $(INCLUDE_FLAG) -c $< -o $@
 
 .PHONY: all clean fclean re
+
