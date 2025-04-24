@@ -7,6 +7,7 @@ OBJDIR = objects
 
 # sources
 SRCS = main.cpp \
+	   validation.cpp \
 	   get_oneway_list.cpp \
 	   find_best_route.cpp \
 	   utils.cpp

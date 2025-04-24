@@ -11,8 +11,11 @@
 # include <regex>
 # include "structures.h"
 
-void findBestPath(Route& route);
 Route getOneWayList(void);
+void findBestPath(Route& route);
+
+/* for validation */
+bool isValidInput(string line, int& startId, int& endId, float& distance);
 bool isInteger(const string& str);
 bool isFloat(const string& str);
 
