@@ -1,69 +1,13 @@
 #include "longtrip.h"
 
-bool	isInteger(const string &str)
+bool isInteger(const string& str)
 {
-	size_t	i;
-
-	i = 0;
-	if (str.empty())
-	{
-		return (false);
-	}
-	while (isspace(str[i]))
-	{
-		i++;
-	}
-	if (i >= str.size() || !isdigit(str[i]))
-	{
-		return (false);
-	}
-	while (i < str.size() && isdigit(str[i]))
-	{
-		i++;
-	}
-	while (str[i] && isspace(str[i]))
-	{
-		i++;
-	}
-	return (i == str.size());
+    regex int_pattern("^\\s*\\d+\\s*$");
+    return std::regex_match(str, int_pattern);
 }
 
-bool	isFloat(const string &str)
+bool isFloat(const string& str)
 {
-	size_t	i;
-
-	i = 0;
-	if (str.empty())
-	{
-		return (false);
-	}
-	while (str[i] && isspace(str[i]))
-	{
-		i++;
-	}
-	if (i >= str.size() || !isdigit(str[i]))
-	{
-		return (false);
-	}
-	while (str[i] && isdigit(str[i]))
-	{
-		i++;
-	}
-	if (i < str.size() && str[i] == '.')
-	{
-		i++;
-		if (i >= str.size() || !isdigit(str[i]))
-		{
-			return (false);
-		}
-		while (i < str.size() && isdigit(str[i]))
-		{
-			i++;
-		}
-	}
-	while (i < str.size() && isspace(str[i]))
-	{
-		i++;
-	}
-	return (i == str.size());
+    regex float_pattern("^\\s*\\d*\\.?\\d+\\s*$");
+    return std::regex_match(str, float_pattern);
 }

@@ -8,6 +8,7 @@
 # include <iostream>
 # include <sstream>
 # include <vector>
+# include <regex>
 # include "structures.h"
 
 void findBestPath(Route& route);
