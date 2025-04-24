@@ -2,7 +2,7 @@
 
 int main(void)
 {
-	c_route route = get_oneway_list();
-    find_best_path(route);
+	Route route = getOneWayList();
+    findBestPath(route);
     return EXIT_SUCCESS;
 }

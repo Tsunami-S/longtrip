@@ -8,7 +8,8 @@ OBJDIR = objects
 # sources
 SRCS = main.cpp \
 	   get_oneway_list.cpp \
-	   find_best_route.cpp
+	   find_best_route.cpp \
+	   utils.cpp
 
 # objects
 OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))

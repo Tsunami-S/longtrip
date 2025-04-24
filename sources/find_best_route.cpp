@@ -1,6 +1,6 @@
 #include "longtrip.h"
 
-static void dfs(const c_route& route, int id, vector<bool>& visited, c_path& current, c_path& best)
+static void dfs(const Route& route, int id, vector<bool>& visited, Path& current, Path& best)
 {
     visited[id] = true;
     current.path.push_back(id);
@@ -22,13 +22,13 @@ static void dfs(const c_route& route, int id, vector<bool>& visited, c_path& cur
     current.path.pop_back();
 }
 
-void find_best_path(c_route& route)
+void findBestPath(Route& route)
 {
-	c_path current;
-	c_path best;
-    vector<bool> visited(route.num_of_way, false);
+	Path current;
+	Path best;
+    vector<bool> visited(route.numOfWay, false);
 
-    for (int i = 0; i < route.num_of_way; i++)
+    for (int i = 0; i < route.numOfWay; i++)
 	{
         dfs(route, i, visited, current, best);
 	}

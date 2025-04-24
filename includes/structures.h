@@ -1,38 +1,32 @@
-#ifndef STRUCTURES_H
+#ifndef STRUCTUwRES_H
 # define STRUCTURES_H
 
 using namespace	std;
 
-struct			s_oneway
+struct			OneWay
 {
 	int			id;
 	float		distance;
 };
 
-class c_path
+class Path
 {
   public:
 	float distance;
 	vector<int> path;
 
-	c_path()
-	{
-		distance = 0;
-	}
+	Path() : distance(0) {};
 };
 
-class c_route
+class Route
 {
   public:
-	int num_of_way;
-	vector<vector<s_oneway>> list;
+	int numOfWay;
+	vector<vector<OneWay>> list;
 
-	c_route(int num)
-	{
-		num_of_way = num;
-		list.resize(num);
-	}
-	void add_oneway(int start, int end, float distance)
+	Route(int num) : numOfWay(num), list(num) {}
+
+	void addOneWay(int start, int end, float distance)
 	{
 		list[start].push_back({end, distance});
 	}
