@@ -1,27 +1,27 @@
 #include "longtrip.h"
 
-static bool isValidInput(string line, int& startId, int& endId, float& distance)
+static bool isValidFormat(string line, int& startId, int& endId, float& distance)
 {
 	bool error;
-	string startIdStr;
-	string endIdStr;
+	string startStr;
+	string endStr;
 	string distanceStr;
 
 	error = true;
 	stringstream ss(line);
-	if(!getline(ss, startIdStr, ',') || !getline(ss, endIdStr, ',') || !getline(ss, distanceStr))
+	if(!getline(ss, startStr, ',') || !getline(ss, endStr, ',') || !getline(ss, distanceStr))
 	{
 		cerr << "Error: Invalid input format. Skipping line: " << line << endl;
 		return false;
     }
-    if (!isInteger(startIdStr))
+    if (!isInteger(startStr))
 	{
-        cerr << "Error: Invalid integer value: " << startIdStr << endl;
+        cerr << "Error: Invalid integer value: " << startStr << endl;
 		error = false;
     }
-    if (!isInteger(endIdStr))
+    if (!isInteger(endStr))
 	{
-        cerr << "Error: Invalid integer value: " << endIdStr << endl;
+        cerr << "Error: Invalid integer value: " << endStr << endl;
 		error = false;
     }
     if (!isFloat(distanceStr))
@@ -34,9 +34,17 @@ static bool isValidInput(string line, int& startId, int& endId, float& distance)
 		cerr << "Skipping line: " << line << endl;
 		return error;
 	}
-    startId = stoi(startIdStr);
-    endId = stoi(endIdStr);
+    startId = stoi(startStr);
+    endId = stoi(endStr);
     distance = stof(distanceStr);
+	return true;
+}
+
+static bool isValidRange(string line, int& startId, int& endId, float& distance)
+{
+	bool error;
+
+	error = true;
     if (startId < 0 || startId > INT_MAX)
 	{
         cerr << "Error: Invalid startId station ID. Must be between 0 and " << INT_MAX << "." << endl;
@@ -57,6 +65,15 @@ static bool isValidInput(string line, int& startId, int& endId, float& distance)
 		cerr << "Skipping line: " << line << endl;
 	}
     return error;
+}
+
+static bool isValidInput(string line, int& startId, int& endId, float& distance)
+{
+	if(!isValidFormat(line, startId, endId, distance))
+		return false;
+	if(!isValidRange(line, startId, endId, distance))
+		return false;
+	return true;
 }
 
 static bool checkExistance(const int& startId, const int& endId, const float& distance, vector<pair<pair<int, int>, float>>& edges)
@@ -84,6 +101,9 @@ Route getOneWayList(void)
 
     while (getline(cin, line))
 	{
+		startId = -1;
+		endId = -1;
+		distance = -1;
 		if (!isValidInput(line, startId, endId, distance))
 			continue;
 		distance = round(distance * 100) / 100.0;

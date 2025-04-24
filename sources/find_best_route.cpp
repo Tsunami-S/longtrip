@@ -1,6 +1,6 @@
 #include "longtrip.h"
 
-static void dfs(const Route& route, int id, vector<bool>& visited, Path& current, Path& best)
+static void deepFirstSearch(const Route& route, int id, vector<bool>& visited, Path& current, Path& best)
 {
     visited[id] = true;
     current.path.push_back(id);
@@ -14,7 +14,7 @@ static void dfs(const Route& route, int id, vector<bool>& visited, Path& current
         if (!visited[edge.id])
 		{
 			current.distance += edge.distance;
-            dfs(route, edge.id, visited, current, best);
+            deepFirstSearch(route, edge.id, visited, current, best);
 			current.distance -= edge.distance;
 		}
     }
@@ -30,7 +30,7 @@ void findBestPath(Route& route)
 
     for (int i = 0; i < route.numOfWay; i++)
 	{
-        dfs(route, i, visited, current, best);
+        deepFirstSearch(route, i, visited, current, best);
 	}
     for (const auto& station : best.path)
 	{
