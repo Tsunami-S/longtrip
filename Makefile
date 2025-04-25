@@ -1,9 +1,9 @@
 NAME = longtrip
 
 # directories
-INCDIR = includes
-SRCDIR = sources
-OBJDIR = objects
+INCLUDE_DIR = includes
+SRC_DIR = sources
+OBJ_DIR = objects
 
 # sources
 SRCS = main.cpp \
@@ -13,30 +13,34 @@ SRCS = main.cpp \
 	   utils.cpp
 
 # objects
-OBJS = $(addprefix $(OBJDIR)/, $(SRCS:.cpp=.o))
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 
 # flags
 BASIC_FLAG = -std=c++17 -O2
 WARNING_FLAG = -Wall -Wextra -Werror
-INCLUDE_FLAG = -I$(INCDIR)
+INCLUDE_FLAG = -I$(INCLUDE_DIR)
+
+# command
+CXX = g++
+RM = rm -rf
 
 # rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	g++ $(BASIC_FALG) $(WARNING_FALG) $(OBJS) $(INCLUDE_FLAG) -o $(NAME)
+	$(CXX) $(BASIC_FLAG) $(WARNING_FLAG) $(OBJS) $(INCLUDE_FLAG) -o $(NAME)
 
 clean:
-	$(RM) -r $(OBJDIR)
+	$(RM) -r $(OBJ_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
 
 re: fclean all
 
-$(OBJDIR)/%.o:$(SRCDIR)/%.cpp
+$(OBJ_DIR)/%.o:$(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
-	g++ $(BASIC_FLAG) $(WARNING_FLAG) $(INCLUDE_FLAG) -c $< -o $@
+	$(CXX)  $(BASIC_FLAG) $(WARNING_FLAG) $(INCLUDE_FLAG) -c $< -o $@
 
 .PHONY: all clean fclean re
 
