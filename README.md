@@ -1,4 +1,4 @@
-# The subject of finding the longest path
+# Finding the longest path
 
 ## The development environment
 * OS: Linux x86_64(Arch linux)
