@@ -31,6 +31,7 @@ Example input:
 
   The program will continue to accept inputs until you send an EOF (End Of File) signal .
   After receiving EOF, the program will compute and display the longest path.
+  If the same route is entered multiple times, the distance will be updated each time.
 
 3. **Output**:
   The program will print the IDs of the stations along the longest path, one ID per line.
@@ -45,6 +46,7 @@ Example output:
 4
 1
 ```
+   If multiple longest routes exist, only the first one found will be displayed.
 
 ## Notes
 * The program does not allow a station to appear more than once in the path.
