@@ -17,7 +17,7 @@ static void deepFirstSearch(const Route& route, int startId, Path& best)
             best.distance = savedStack.getDistance();
             best.path = savedStack.getPath();
         }
-		/* push valiable stations to stack */
+		/* push reachable stations to stack */
 		if(savedStack.visitStatus(savedStack.getId()) == END)
 			continue;
         for (const auto& edge : route.list[savedStack.getId()])

@@ -52,3 +52,5 @@ Example output:
   * Station IDs (start and end) are 32-bit signed integers.
   * The distance is a floating-point number represented within the range of the float type.
 * If the input is invalid (e.g., incorrect format), the program will print an error message and skip the invalid line.
+* If 'std::regex' does not compile due to compiler or library support issues with C++17, please open `utils.cpp` and replace the current function with the commented-out alternatives.
+* This issue may occur in certain environments where 'std::regex' is not fully supported or enabled by default.
