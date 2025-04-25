@@ -1,44 +1,39 @@
 #include "longtrip.h"
 
+/* DeepFirstSearch using iteration */
 static void deepFirstSearch(const Route& route, int startId, Path& best)
 {
-    stack<pair<int, Path>> s;
-    vector<bool> visited(route.list.size(), false);
+    stack<DFSStatus> stack;
 
-    Path initialPath;
-    s.push({startId, initialPath});
-    while (!s.empty())
-	{
-        auto [id, current] = s.top();
-        s.pop();
-        if (visited[id])
-		{
-            continue;
+    stack.emplace(startId, route.numOfWay);
+    while (!stack.empty())
+    {
+		/* save current top of stack and pop it*/
+        DFSStatus savedStack = stack.top();
+        stack.pop();
+		/* update best route */
+        if (savedStack.getDistance() > best.distance)
+        {
+            best.distance = savedStack.getDistance();
+            best.path = savedStack.getPath();
         }
-        visited[id] = true;
-        current.path.push_back(id);
-        if (current.distance > best.distance)
-		{
-            best.distance = current.distance;
-            best.path = current.path;
-        }
-        for (const auto& edge : route.list[id])
-		{
-            if (!visited[edge.id])
-			{
-                Path newPath = current;
-                newPath.distance += edge.distance;
-                s.push({edge.id, newPath});
+		/* push valiable stations to stack */
+		if(savedStack.visitStatus(savedStack.getId()) == END)
+			continue;
+        for (const auto& edge : route.list[savedStack.getId()])
+        {
+            if (savedStack.visitStatus(edge.id) != PASSED)
+            {
+                DFSStatus next = savedStack.nextStatus(edge.id, edge.distance);
+                stack.push(next);
             }
         }
-        current.path.pop_back();
     }
 }
 
 void findBestPath(Route& route)
 {
 	Path best;
-    vector<bool> visited(route.numOfWay, false);
 
     for (int i = 0; i < route.numOfWay; i++)
 	{

@@ -4,8 +4,8 @@ static bool checkExistance(const int& startId, const int& endId, const float& di
 {
 	for (auto& edge : edges)
 	{
-		if ((edge.first.first == startId && edge.first.second == endId) ||
-			(edge.first.first == endId && edge.first.second == startId))
+		/* if it already exists, update the distance */
+		if ((edge.first.first == startId && edge.first.second == endId))
 		{
 			edge.second = distance;
 			return true;
@@ -23,6 +23,7 @@ Route getOneWayList(void)
     int numOfStations;
     vector<pair<pair<int, int>, float>> edges;
 
+	/* continue input until EOF is received */
     while (getline(cin, line))
 	{
 		startId = -1;
@@ -34,6 +35,7 @@ Route getOneWayList(void)
 		if (!checkExistance(startId, endId, distance, edges))
 			edges.push_back({{startId, endId}, distance});
     }
+	/* use the largest id as the number of stations and create a route list */
     numOfStations = 0;
     for (const auto& edge : edges)
 	{
@@ -43,7 +45,6 @@ Route getOneWayList(void)
     for (const auto& edge : edges)
 	{
         route.addOneWay(edge.first.first, edge.first.second, edge.second);
-        route.addOneWay(edge.first.second, edge.first.first, edge.second);
 	}
 	return route;
 }
